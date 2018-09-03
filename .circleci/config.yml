@@ -33,7 +33,7 @@ jobs:
   # -------------------------------------
   build_rpi_armv6:
     <<: *defaults
-
+    
     environment:
       GNARGSCOMMON: 'rtc_include_tests=false rtc_enable_protobuf=false use_custom_libcxx=false rtc_include_pulse_audio=false rtc_build_examples=false is_clang=false treat_warnings_as_errors=false' 
       TAR_OPTIONS: --no-same-owner
@@ -82,7 +82,7 @@ workflows:
   version: 2
   build:
     jobs:
-      - setup:
+      - setup
 
       - build_rpi_armv6:
           requires:
