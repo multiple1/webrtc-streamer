@@ -83,18 +83,10 @@ workflows:
   build:
     jobs:
       - setup:
-          filters:
-            branches:
-              only: v12       
+	  
       - build_rpi_armv6:
           requires:
             - setup
-          filters:
-            branches:
-              only: v12         
       - store_artifact:
           requires:
             - build_rpi_armv6
-          filters:
-            branches:
-              only: v12       
