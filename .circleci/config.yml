@@ -33,10 +33,7 @@ jobs:
   # -------------------------------------
   build_rpi_armv6:
     <<: *defaults
-    ilters:
-        branches:
-            only: v12
-	  
+
     environment:
       GNARGSCOMMON: 'rtc_include_tests=false rtc_enable_protobuf=false use_custom_libcxx=false rtc_include_pulse_audio=false rtc_build_examples=false is_clang=false treat_warnings_as_errors=false' 
       TAR_OPTIONS: --no-same-owner
@@ -80,53 +77,24 @@ jobs:
       - store_artifacts:
           path: /distrib
           
-		  
+  
 workflows:
   version: 2
   build:
     jobs:
       - setup:
           filters:
-            tags:
-              only: /.*/            
-      - build_x86_64:
-          requires:
-            - setup
-          filters:
-            tags:
-              only: /.*/            
-      - build_heroku:
-          requires:
-            - setup
-          filters:
-            tags:
-              only: /.*/            
-      - build_rpi_armv7:
-          requires:
-            - setup
-          filters:
-            tags:
-              only: /.*/            
+            branches:
+              only: v12       
       - build_rpi_armv6:
           requires:
             - setup
           filters:
-            tags:
-              only: /.*/            
+            branches:
+              only: v12         
       - store_artifact:
           requires:
-            - build_x86_64
-            - build_heroku
-            - build_rpi_armv7
             - build_rpi_armv6
           filters:
-            tags:
-              only: /.*/            
-      - github_release:
-          requires:
-            - store_artifact
-          filters:
             branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
+              only: v12       
