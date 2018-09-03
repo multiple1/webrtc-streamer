@@ -84,20 +84,17 @@ workflows:
     jobs:
       - setup:
           filters:
-          branches:
+            branches:
               only: v12       
       - build_rpi_armv6:
           requires:
             - setup
           filters:
-          branches:
+            branches:
               only: v12         
       - store_artifact:
           requires:
-            - build_x86_64
-            - build_heroku
-            - build_rpi_armv7
             - build_rpi_armv6
           filters:
-          branches:
+            branches:
               only: v12       
